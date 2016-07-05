@@ -1,7 +1,7 @@
 
 package hextonnetz;
 
-import static hextonnetz.HexNote.*;
+//import hextonnetz.HexNote;
 import static mylibrary.PrintArrays.*;
 import static mylibrary.JMusicQuick.*;
 
@@ -36,6 +36,17 @@ public class HexTonnetz implements JMC {
     } //tonHex8(int)
     
     public static final int[][] TONHEX8 = tonHex8(60);
+    
+    public static int[] randomWalk(int length) {
+        int[] pitchArray = new int[length];
+        HexNote note = new HexNote(12, 12);
+        pitchArray[0] = note.getPitch();
+        for (int t = 1; t < length; t++) {
+            note.randomStep();
+            pitchArray[t] = note.getPitch();
+        } //for t
+        return pitchArray;
+    } //randomWalk(int)
     
     public static int[] testNotes() {
         int[] pitchArray = new int[25];
@@ -121,8 +132,12 @@ public class HexTonnetz implements JMC {
     public static void main(String[] args) {
         printArray(TONHEX);
         
-        printArray(testNotes());
-        play(testNotes(), HORN);
+        int[] pitchArray = randomWalk(400);
+        
+        printArray(pitchArray);
+        //play(pitchArray, 0.1, 117);
+        write(pitchArray, 0.1, BIRD, "BIRDS");
+        
     } //main(String[])
     
 } //HexTonnetz
