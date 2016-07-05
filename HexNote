@@ -2,6 +2,7 @@
 package hextonnetz;
 
 import static hextonnetz.HexTonnetz.*;
+import static mylibrary.Operations.*;
 
 public class HexNote {
     
@@ -16,6 +17,8 @@ public class HexNote {
         column = columnInit;
         pitch = TONHEX[row][column];
     } //HexNote(int, int)
+    
+    
     
     //toString() method (for printing)
     @Override
@@ -34,10 +37,41 @@ public class HexNote {
     } //setPitch()
     
     public void changeNote(int i, int j) {
-        row = (row + i)%24;
-        column = (column + j)%24;
+        row = mod(row + i, 24);
+        column = mod(column + i, 24);
         setPitch();
     } //changeNote(int, int)
+    
+    //methods to move to neighboring notes
+    public void left() {
+        changeNote(0, -2);
+    } //left()
+    public void upLeft() {
+        changeNote(-1, -1);
+    } //upLeft()
+    public void upRight() {
+        changeNote(-1, 1);
+    } //upRight()
+    public void right() {
+        changeNote(0, 2);
+    } //right()
+    public void downRight() {
+        changeNote(1, 1);
+    } //downRight()
+    public void downLeft() {
+        changeNote(1, -1);
+    } //downLeft()
+    
+    public void randomStep() {
+        double p = 0.1666666666666666666666666666666666666666666666666666666667;
+        double r = Math.random();
+        if (r < p) left();
+        else if (r < 2*p) upLeft();
+        else if (r < 3*p) upRight();
+        else if (r < 4*p) right();
+        else if (r < 5*p) downRight();
+        else downLeft();
+    } //randomStep()
     
     public void m2Up() {
         changeNote(2, 0);
