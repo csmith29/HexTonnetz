@@ -1,0 +1,126 @@
+
+package hextonnetz;
+
+import static hextonnetz.HexTonnetz.*;
+
+public class HexNote {
+    
+    //fields
+    private int row;
+    private int column;
+    private int pitch;
+    
+    //constructor
+    public HexNote(int rowInit, int columnInit) {
+        row = rowInit;
+        column = columnInit;
+        pitch = TONHEX[row][column];
+    } //HexNote(int, int)
+    
+    //toString() method (for printing)
+    @Override
+    public String toString() {
+        return "location: (" + row + "," + column + ")   pitch: " + pitch;
+    } //toString()
+    
+    //accessors
+    public int getPitch() {
+        return pitch;
+    } //getPitch()
+    
+    //method to set note (use after changing row and/or column)
+    public void setPitch() {
+        pitch = TONHEX[row][column];
+    } //setPitch()
+    
+    public void changeNote(int i, int j) {
+        row = (row + i)%24;
+        column = (column + j)%24;
+        setPitch();
+    } //changeNote(int, int)
+    
+    public void m2Up() {
+        changeNote(2, 0);
+    } //m2Up()
+    public void m2Down() {
+        changeNote(-2, 0);
+    } //m2Down()
+    
+    public void M2Up() {
+        changeNote(-3, 1);
+    } //M2Up()
+    public void M2Down() {
+        changeNote(3, -1);
+    } //M2Down()
+    
+    public void m3Up() {
+        changeNote(-1, 1);
+    } //m3Up()
+    public void m3Down() {
+        changeNote(1, -1);
+    } //m3Down()
+    
+    public void M3Up() {
+        changeNote(1, 1);
+    } //M3Up()
+    public void M3Down() {
+        changeNote(-1, -1);
+    } //M3Down()
+    
+    public void P4Up() {
+        changeNote(3, 1);
+    } //P4Up()
+    public void P4Down() {
+        changeNote(-3, -1);
+    } //P4Down()
+    
+    public void TTUp() {
+        changeNote(-2, 2);
+    } //TTUp()
+    public void TTDown() {
+        changeNote(2, -2);
+    } //TTDown()
+    
+    public void P5Up() {
+        changeNote(0, 2);
+    } //P5Up()
+    public void P5Down() {
+        changeNote(0, -2);
+    } //P5Down()
+    
+    public void m6Up() {
+        changeNote(2, 2);
+    } //m6Up()
+    public void m6Down() {
+        changeNote(-2, -2);
+    } //m6Down()
+    
+    public void M6Up() {
+        changeNote(-3, 3);
+    } //M6Up()
+    public void M6Down() {
+        changeNote(3, -3);
+    } //M6Down()
+    
+    public void m7Up() {
+        changeNote(-1, 3);
+    } //m7Up()
+    public void m7Down() {
+        changeNote(1, -3);
+    } //m7Down()
+    
+    public void M7Up() {
+        changeNote(1, 3);
+    } //M7Up()
+    public void M7Down() {
+        changeNote(-1, -3);
+    } //M7Down()
+    
+    public void P8Up() {
+        changeNote(3, 3);
+    } //P8Up()
+    public void P8Down() {
+        changeNote(-3, -3);
+    } //P8Down()
+    
+} //HexNote
