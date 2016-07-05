@@ -1,0 +1,128 @@
+
+package hextonnetz;
+
+import static hextonnetz.HexNote.*;
+import static mylibrary.PrintArrays.*;
+import static mylibrary.JMusicQuick.*;
+
+import jm.JMC;
+
+public class HexTonnetz implements JMC {
+
+    public static int[][] tonHex(int lowNote) {
+        int[][] tonnetz = new int[24][24];
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                tonnetz[2*i][2*j] = lowNote + i + 7*j;
+                tonnetz[2*i + 1][2*j + 1] = lowNote + 4 + i + 7*j;
+            }//for j
+        } //for i
+        return tonnetz;
+    } //tonRow(int)
+    
+    public static final int[][] TONHEX = tonHex(12);
+    
+    public static int[][] tonHex8(int lowNote) {
+        int[][] tonnetz = tonHex(0);
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                tonnetz[2*i][2*j] %= 12;
+                tonnetz[2*i + 1][2*j + 1] %= 12;
+                tonnetz[2*i][2*j] += lowNote;
+                tonnetz[2*i + 1][2*j + 1] += lowNote;
+            } //for j
+        } //for i
+        return tonnetz;
+    } //tonHex8(int)
+    
+    public static final int[][] TONHEX8 = tonHex8(60);
+    
+    public static int[] testNotes() {
+        int[] pitchArray = new int[25];
+        HexNote note = new HexNote(12, 12);
+        int t = 0;
+        pitchArray[t] = note.getPitch();
+        note.m2Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m2Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M2Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M2Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m3Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m3Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M3Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M3Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.P4Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.P4Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.TTDown();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.TTUp();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.P5Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.P5Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m6Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m6Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M6Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M6Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m7Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.m7Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M7Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.M7Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.P8Down();
+        t++;
+        pitchArray[t] = note.getPitch();
+        note.P8Up();
+        t++;
+        pitchArray[t] = note.getPitch();
+        
+        return pitchArray;
+    } //testNotes()
+    
+    public static void main(String[] args) {
+        printArray(TONHEX);
+        
+        printArray(testNotes());
+        play(testNotes(), HORN);
+    } //main(String[])
+    
+} //HexTonnetz
