@@ -36,11 +36,22 @@ public class HexNote {
         pitch = TONHEX[row][column];
     } //setPitch()
     
+    /*
+    changeNote(int, int) changes the note, whereas changeNote(int, int) defines
+    the next note, so the original note is unchanged.
+     */
     public void changeNote(int i, int j) {
         row = mod(row + i, 24);
-        column = mod(column + i, 24);
+        column = mod(column + j, 24);
         setPitch();
     } //changeNote(int, int)
+    public HexNote nextNote(int i, int j) {
+        int nextRow = mod(row + i, 24);
+        int nextColumn = mod(column + j, 24);
+        HexNote next = new HexNote(nextRow, nextColumn);
+        return next;
+    } //nextNote(int, int)
+    
     
     //methods to move to neighboring notes
     public void left() {
@@ -156,5 +167,131 @@ public class HexNote {
     public void P8Down() {
         changeNote(-3, -3);
     } //P8Down()
+    
+    //methods to move to neighboring notes
+    public HexNote nextLeft() {
+        return nextNote(0, -2);
+    } //nextLeft()
+    public HexNote nextUpLeft() {
+        return nextNote(-1, -1);
+    } //nextUpLeft()
+    public HexNote nextUpRight() {
+        return nextNote(-1, 1);
+    } //nextUpRight()
+    public HexNote nextRight() {
+        return nextNote(0, 2);
+    } //nextRight()
+    public HexNote nextDownRight() {
+        return nextNote(1, 1);
+    } //nextDownRight()
+    public HexNote nextDownLeft() {
+        return nextNote(1, -1);
+    } //nextDownLeft()
+    
+    public HexNote nextRandomStep() {
+        HexNote next;
+        double p = 0.1666666666666666666666666666666666666666666666666666666667;
+        double r = Math.random();
+        if (r < p) next = nextLeft();
+        else if (r < 2*p) next = nextUpLeft();
+        else if (r < 3*p) next = nextUpRight();
+        else if (r < 4*p) next = nextRight();
+        else if (r < 5*p) next = nextDownRight();
+        else next = nextDownLeft();
+        return next;
+    } //nextRandomStep()
+    
+    public HexNote nextm2Up() {
+        return nextNote(2, 0);
+    } //nextm2Up()
+    public HexNote nextm2Down() {
+        return nextNote(-2, 0);
+    } //nextm2Down()
+    
+    public HexNote nextM2Up() {
+        return nextNote(-3, 1);
+    } //nextM2Up()
+    public HexNote nextM2Down() {
+        return nextNote(3, -1);
+    } //nextM2Down()
+    
+    public HexNote nextm3Up() {
+        return nextNote(-1, 1);
+    } //nextm3Up()
+    public HexNote nextm3Down() {
+        return nextNote(1, -1);
+    } //nextm3Down()
+    
+    public HexNote nextM3Up() {
+        return nextNote(1, 1);
+    } //nextM3Up()
+    public HexNote nextM3Down() {
+        return nextNote(-1, -1);
+    } //nextM3Down()
+    
+    public HexNote nextP4Up() {
+        return nextNote(3, 1);
+    } //nextP4Up()
+    public HexNote nextP4Down() {
+        return nextNote(-3, -1);
+    } //nextP4Down()
+    
+    public HexNote nextTTUp() {
+        return nextNote(-2, 2);
+    } //nextTTUp()
+    public HexNote nextTTDown() {
+        return nextNote(2, -2);
+    } //nextTTDown()
+    
+    public HexNote nextP5Up() {
+        return nextNote(0, 2);
+    } //nextP5Up()
+    public HexNote nextP5Down() {
+        return nextNote(0, -2);
+    } //nextP5Down()
+    
+    public HexNote nextm6Up() {
+        return nextNote(2, 2);
+    } //nextm6Up()
+    public HexNote nextm6Down() {
+        return nextNote(-2, -2);
+    } //nextm6Down()
+    
+    public HexNote nextM6Up() {
+        return nextNote(-3, 3);
+    } //nextM6Up()
+    public HexNote nextM6Down() {
+        return nextNote(3, -3);
+    } //nextM6Down()
+    
+    public HexNote nextm7Up() {
+        return nextNote(-1, 3);
+    } //nextm7Up()
+    public HexNote nextm7Down() {
+        return nextNote(1, -3);
+    } //nextm7Down()
+    
+    public HexNote nextM7Up() {
+        return nextNote(1, 3);
+    } //nextM7Up()
+    public HexNote nextM7Down() {
+        return nextNote(-1, -3);
+    } //nextM7Down()
+    
+    public HexNote nextP8Up() {
+        return nextNote(3, 3);
+    } //nextP8Up()
+    public HexNote nextP8Down() {
+        return nextNote(-3, -3);
+    } //nextP8Down()
+    
+    /**
+     * method to calculate grid distance from a certain note
+     * @param centerPitch
+     * @return Let's just use the difference in pitch
+     */
+    public int distFrom(int centerPitch) {
+        return Math.abs(getPitch() - centerPitch);
+    } //distFrom(int)
     
 } //HexNote
