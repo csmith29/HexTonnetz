@@ -129,16 +129,28 @@ public class HexTonnetz implements JMC {
         return pitchArray;
     } //testNotes()
     
+    public static double[] evenParts(int things) {
+        double[] result = new double[things];
+        double p = 1.0/(double)(things);
+        for (int i = 0; i < things; i++) {
+            result[i] = p;
+        } //for i
+        return result;
+    } //evenParts(int)
+    
     public static void main(String[] args) {
         printArray(TONHEX);
         
+        double[] probs7th = evenParts(7);
+        double[] probs = {0.0,0.0,0.0,0.0,0.0,0.0,1.0};
+        
         HexNote note1 = new HexNote(12, 12);
         HexNote note2 = new HexNote(12, 16);
-        HexNote note3 = note1.nextNote(0, 4);
+        HexNote note3 = note1.nextNeighbor(probs7th);
         int dist = note1.distFrom(note2.getPitch());
         System.out.println(dist);
         System.out.println(note3 + "..." + note1);
-        
+        printArray(probs7th);
     } //main(String[])
     
 } //HexTonnetz
