@@ -132,11 +132,12 @@ public class HexTonnetz implements JMC {
     public static void main(String[] args) {
         printArray(TONHEX);
         
-        int[] pitchArray = randomWalk(400);
-        
-        printArray(pitchArray);
-        //play(pitchArray, 0.1, 117);
-        write(pitchArray, 0.1, BIRD, "BIRDS");
+        HexNote note1 = new HexNote(12, 12);
+        HexNote note2 = new HexNote(12, 16);
+        HexNote note3 = note1.nextNote(0, 4);
+        int dist = note1.distFrom(note2.getPitch());
+        System.out.println(dist);
+        System.out.println(note3 + "..." + note1);
         
     } //main(String[])
     
