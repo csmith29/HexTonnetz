@@ -1,6 +1,8 @@
 
 package hextonnetz;
 
+import java.util.*;
+
 import static hextonnetz.HexTonnetz.*;
 import static mylibrary.Operations.*;
 
@@ -187,6 +189,25 @@ public class HexNote {
     public HexNote nextDownLeft() {
         return nextNote(1, -1);
     } //nextDownLeft()
+    
+    public HexNote nextNeighbor(double[] probs) {
+        List<HexNote> next = new ArrayList<>();
+        next.add(this);
+        next.add(this.nextLeft());
+        next.add(this.nextUpLeft());
+        next.add(this.nextUpRight());
+        next.add(this.nextRight());
+        next.add(this.nextDownRight());
+        next.add(this.nextDownLeft());
+        double r = Math.random();
+        double sum = 0.0;
+        int count = -1;
+        while (!(r < sum) && count < 7) {
+            count++;
+            sum += probs[count];
+        } //while
+        return next.get(count);
+    } //nextNeighbor(double[])
     
     public HexNote nextRandomStep() {
         HexNote next;
