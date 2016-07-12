@@ -20,11 +20,30 @@ public class HexTransitionRules {
      */
     public static double rating(int currentPitch, int otherPitch, int avgPitch) {
         double result;
-        if (Math.abs((double)(currentPitch - avgPitch)) < 12) result = 1.0;
-        else if ((otherPitch - currentPitch)*(currentPitch - avgPitch) >= 0) result = 1.0;
-        else result = 12.0;
+        if (Math.abs((double)(currentPitch - avgPitch)) < 10) result = 1.0;
+        else if ((otherPitch - currentPitch)*(currentPitch - avgPitch) > 0) result = 1.0;
+        else result = 20.0;
+        if (inKey(otherPitch, CMAJOR)) result *= 40;
         return result;
     } //rating(int, int, int)
+    
+    public static final int[] ANYTHING = {0,1,2,3,4,5,6,7,8,9,10,11};
+    public static final int[] CMAJOR = {0,2,4,5,7,9,11};
+    public static final int[] CMINOR = {0,2,3,5,7,8,10,11};
+    public static final int[] CMAJORPENTATONIC = {0,2,4,7,9};
+    public static final int[] CBLUES = {0,3,5,6,7,10};
+    
+    public static boolean inCMajor(int pitch) {
+        return inKey(pitch, CMAJOR);
+    } //inCMajor(int)
+    
+    public static boolean inKey(int pitch, int[] mode) {
+        boolean result = false;
+        for (int i = 0; i < mode.length; i++) {
+            if (pitch%12 == mode[i]) result = true;
+        } //for i
+        return result;
+    } //inCMajor(int)
     
     public static double[] probabilities(double[] ratings) {
         double[] result = normalize(ratings);
