@@ -1,9 +1,9 @@
 
 package hextonnetz;
 
-//import hextonnetz.HexNote;
 import static mylibrary.PrintArrays.*;
 import static mylibrary.JMusicQuick.*;
+import static mylibrary.Operations.*;
 
 import jm.JMC;
 
@@ -48,86 +48,16 @@ public class HexTonnetz implements JMC {
         return pitchArray;
     } //randomWalk(int)
     
-    public static int[] testNotes() {
-        int[] pitchArray = new int[25];
-        HexNote note = new HexNote(12, 12);
-        int t = 0;
-        pitchArray[t] = note.getPitch();
-        note.m2Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m2Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M2Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M2Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m3Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m3Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M3Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M3Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.P4Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.P4Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.TTDown();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.TTUp();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.P5Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.P5Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m6Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m6Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M6Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M6Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m7Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.m7Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M7Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.M7Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.P8Down();
-        t++;
-        pitchArray[t] = note.getPitch();
-        note.P8Up();
-        t++;
-        pitchArray[t] = note.getPitch();
-        
+    public static int[] testNotes(int length, HexNote avgPitch) {
+        int[] pitchArray = new int[length];
+        HexNote currentPitch = avgPitch;
+        pitchArray[0] = currentPitch.getPitch();
+        for (int t = 1; t < length; t++) {
+            currentPitch = currentPitch.nextNeighbor(avgPitch.getPitch());
+            pitchArray[t] = currentPitch.getPitch();
+        } //for t
         return pitchArray;
-    } //testNotes()
+    } //testNotes(int, HexNote)
     
     public static double[] evenParts(int things) {
         double[] result = new double[things];
@@ -138,19 +68,24 @@ public class HexTonnetz implements JMC {
         return result;
     } //evenParts(int)
     
+    public static final HexNote MIDDLEC = new HexNote(12, 12);
+    
     public static void main(String[] args) {
         printArray(TONHEX);
         
-        double[] probs7th = evenParts(7);
-        double[] probs = {0.0,0.0,0.0,0.0,0.0,0.0,1.0};
+        int[] pitchArray = testNotes(100, MIDDLEC);
+        printArray(pitchArray);
+        play(pitchArray, 0.25);
+        write(pitchArray, 0.25, "LimitedRandomHexWalk");
         
-        HexNote note1 = new HexNote(12, 12);
-        HexNote note2 = new HexNote(12, 16);
-        HexNote note3 = note1.nextNeighbor(probs7th);
-        int dist = note1.distFrom(note2.getPitch());
-        System.out.println(dist);
-        System.out.println(note3 + "..." + note1);
-        printArray(probs7th);
+        HexNote avgNote = MIDDLEC;
+        HexNote hiNote = new HexNote(7, 17);
+        HexNote loNote = new HexNote(14, 8);
+        HexNote midNote = new HexNote(12, 14);
+        printArray(avgNote.neighborRatings(avgNote.getPitch()));
+        printArray(hiNote.neighborRatings(avgNote.getPitch()));
+        printArray(loNote.neighborRatings(avgNote.getPitch()));
+        printArray(midNote.neighborRatings(avgNote.getPitch()));
     } //main(String[])
     
 } //HexTonnetz
