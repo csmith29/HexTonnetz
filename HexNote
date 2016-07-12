@@ -77,14 +77,14 @@ public class HexNote {
     } //downLeft()
     
     public void randomStep() {
-        double p = 0.1666666666666666666666666666666666666666666666666666666667;
+        double p = 1.0/7.0;
         double r = Math.random();
         if (r < p) left();
         else if (r < 2*p) upLeft();
         else if (r < 3*p) upRight();
         else if (r < 4*p) right();
         else if (r < 5*p) downRight();
-        else downLeft();
+        else if (r < 6*p) downLeft();
     } //randomStep()
     
     public void m2Up() {
@@ -229,6 +229,33 @@ public class HexNote {
         double sum = 0.0;
         int count = -1;
         while (!(r < sum) && count < 7) {
+            count++;
+            sum += probs[count];
+        } //while
+        return next.get(count);
+    } //nextNeighbor(double[], int)
+    
+    public HexNote nextNNote(int avgPitch) {
+        List<HexNote> next = new ArrayList<>();
+        next.add(this);
+        next.add(this.nextm2Up());
+        next.add(this.nextm2Down());
+        next.add(this.nextM2Up());
+        next.add(this.nextM2Down());
+        next.add(this.nextm3Up());
+        next.add(this.nextm3Down());
+        next.add(this.nextM3Up());
+        next.add(this.nextM3Down());
+        double[] ratings = new double[9];
+        for (int i = 0; i < 9; i++) {
+            double rating = rating(this.getPitch(), next.get(i).getPitch(), avgPitch);
+            ratings[i] = rating;
+        } //for i
+        double[] probs = probabilities(ratings);
+        double r = Math.random();
+        double sum = 0.0;
+        int count = -1;
+        while (!(r < sum) && count < 9) {
             count++;
             sum += probs[count];
         } //while
