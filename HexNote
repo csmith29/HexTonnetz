@@ -4,6 +4,7 @@ package hextonnetz;
 import java.util.*;
 
 import static hextonnetz.HexTonnetz.*;
+import static hextonnetz.HexTransitionRules.*;
 import static mylibrary.Operations.*;
 
 public class HexNote {
@@ -190,7 +191,7 @@ public class HexNote {
         return nextNote(1, -1);
     } //nextDownLeft()
     
-    public HexNote nextNeighbor(double[] probs) {
+    public HexNote randomNextNeighbor(double[] probs) {
         List<HexNote> next = new ArrayList<>();
         next.add(this);
         next.add(this.nextLeft());
@@ -207,7 +208,49 @@ public class HexNote {
             sum += probs[count];
         } //while
         return next.get(count);
-    } //nextNeighbor(double[])
+    } //randomNextNeighbor(double[])
+    
+    public HexNote nextNeighbor(int avgPitch) {
+        List<HexNote> next = new ArrayList<>();
+        next.add(this);
+        next.add(this.nextLeft());
+        next.add(this.nextUpLeft());
+        next.add(this.nextUpRight());
+        next.add(this.nextRight());
+        next.add(this.nextDownRight());
+        next.add(this.nextDownLeft());
+        double[] ratings = new double[7];
+        for (int i = 0; i < 7; i++) {
+            double rating = rating(this.getPitch(), next.get(i).getPitch(), avgPitch);
+            ratings[i] = rating;
+        } //for i
+        double[] probs = probabilities(ratings);
+        double r = Math.random();
+        double sum = 0.0;
+        int count = -1;
+        while (!(r < sum) && count < 7) {
+            count++;
+            sum += probs[count];
+        } //while
+        return next.get(count);
+    } //nextNeighbor(double[], int)
+    
+    public double[] neighborRatings(int avgPitch) {
+        List<HexNote> next = new ArrayList<>();
+        next.add(this);
+        next.add(this.nextLeft());
+        next.add(this.nextUpLeft());
+        next.add(this.nextUpRight());
+        next.add(this.nextRight());
+        next.add(this.nextDownRight());
+        next.add(this.nextDownLeft());
+        double[] ratings = new double[7];
+        for (int i = 0; i < 7; i++) {
+            double rating = rating(this.getPitch(), next.get(i).getPitch(), avgPitch);
+            ratings[i] = rating;
+        } //for i
+        return ratings;
+    } //neighborRatings(int avgPitch)
     
     public HexNote nextRandomStep() {
         HexNote next;
