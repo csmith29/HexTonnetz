@@ -1,0 +1,34 @@
+
+package hextonnetz;
+
+
+import static mylibrary.Operations.*;
+
+/**
+ * This is where I hope to define some sort of equation that determines the 
+ * probability of moving to certain notes in the Hexagonal Tonnetz(TONHEX).
+ * @author Collin
+ */
+public class HexTransitionRules {
+    /**
+     * This will give some kind of rating, to be put in an array with a bunch
+     * of other ratings.
+     * @param currentPitch
+     * @param otherPitch
+     * @param avgPitch
+     * @return 
+     */
+    public static double rating(int currentPitch, int otherPitch, int avgPitch) {
+        double result;
+        if (Math.abs((double)(currentPitch - avgPitch)) < 12) result = 1.0;
+        else if ((otherPitch - currentPitch)*(currentPitch - avgPitch) >= 0) result = 1.0;
+        else result = 12.0;
+        return result;
+    } //rating(int, int, int)
+    
+    public static double[] probabilities(double[] ratings) {
+        double[] result = normalize(ratings);
+        return result;
+    } //probabilities(double[])
+    
+} //HexTransitionRules
